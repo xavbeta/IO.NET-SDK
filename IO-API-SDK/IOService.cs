@@ -9,12 +9,12 @@ namespace IO_API_SDK
     public interface IOService
     {
         string ApiKey { get; set; }
-        DBConnection Connection { get; set; }
+        IEnumerable<IOUser> EnabledUsers { get; set; }
 
-        List<IOUser> UpdateUsers(out List<IOUser> disabledUser);
+        Task<IDictionary<IOUser, bool>> UpdateUsers();
 
-        bool SendMessage(IOMessage msg, IOUser user);
+        Task<bool> SendMessage(IOMessage msg, IOUser user);
 
-        Dictionary<IOUser, bool> SendMessage(IOMessage msg, List<IOUser> users);
+        Task<IDictionary<IOUser, bool>> SendMessage(IOMessage msg, IEnumerable<IOUser> users); 
     }
 }

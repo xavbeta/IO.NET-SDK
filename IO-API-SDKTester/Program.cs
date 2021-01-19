@@ -10,16 +10,17 @@ namespace IO_API_SDKTester
     class Program
     {
 
-        const string API_KEY = "AAAAAA00A00A000A";
+        const string API_KEY = "82b7eead5dcd4bb5b23f7b3fbdccc191";
+        const string TEST_USER = "AAAAAA00A00A000A";
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
 
             // Create the Service instance
             IOServiceCreator srvCreator = IOServiceCreator.Instance;
 
             srvCreator.SetApiKey(API_KEY);
-            srvCreator.SetDBConnection(new DBConnection());
+            srvCreator.SetEnabledUsers(new List<IOUser> { new IOUser { FiscalCode = TEST_USER } });
             
             IOService service = srvCreator.GetService();
 
@@ -29,14 +30,18 @@ namespace IO_API_SDKTester
             msgCreator.SetSubject("TEST SUBJECT");
             msgCreator.SetBody("## TEST BODY\nLet's hope it works!");
             var msg = msgCreator.GetMessage();
+            var disabledUsers = new List<IOUser>();
+            
+            var enabledUsers = await service.UpdateUsers();
 
-            List<IOUser> enabledUsers = service.UpdateUsers(out List<IOUser> disabledUser);
 
             foreach(var user in enabledUsers)
             {
-                service.SendMessage(msg, user);
+                if(user.Value)
+                    await service.SendMessage(msg, user.Key);
             }
 
+            Console.ReadKey();
         }
     }
 }

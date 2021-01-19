@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace IO_API_SDK
 {
-    public interface IOUser
+    public class IOUser
     {
-        string FiscalCode { get; set; }
+        public string FiscalCode { get; set; }
 
-        string Email { get; set; }
+        public string Email { get; set; }
 
     }
 }

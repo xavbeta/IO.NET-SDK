@@ -1,6 +1,9 @@
 C:\Users\saver\Projects\IO-API-SDK\IO-API-SDK\bin\Debug\IO-API-SDK.dll
 C:\Users\saver\Projects\IO-API-SDK\IO-API-SDK\bin\Debug\IO-API-SDK.pdb
-C:\Users\saver\Projects\IO-API-SDK\IO-API-SDK\obj\Debug\IO-API-SDK.csprojAssemblyReference.cache
+C:\Users\saver\Projects\IO-API-SDK\IO-API-SDK\bin\Debug\Newtonsoft.Json.dll
+C:\Users\saver\Projects\IO-API-SDK\IO-API-SDK\bin\Debug\Newtonsoft.Json.xml
 C:\Users\saver\Projects\IO-API-SDK\IO-API-SDK\obj\Debug\IO-API-SDK.csproj.CoreCompileInputs.cache
+C:\Users\saver\Projects\IO-API-SDK\IO-API-SDK\obj\Debug\IO-API-SDK.csproj.CopyComplete
 C:\Users\saver\Projects\IO-API-SDK\IO-API-SDK\obj\Debug\IO-API-SDK.dll
 C:\Users\saver\Projects\IO-API-SDK\IO-API-SDK\obj\Debug\IO-API-SDK.pdb
+C:\Users\saver\Projects\IO-API-SDK\IO-API-SDK\obj\Debug\IO-API-SDK.csprojAssemblyReference.cache

@@ -27,7 +27,7 @@ namespace IO_API_SDK
 
         private void Reset()
         {
-            service = new IODBService();
+            service = new IOSimpleService();
         }
 
         public void SetApiKey(string ApiKey)
@@ -35,9 +35,9 @@ namespace IO_API_SDK
             service.ApiKey = ApiKey;
         }
 
-        public void SetDBConnection(DBConnection connection)
+        public void SetEnabledUsers(IEnumerable<IOUser> enabledUsers)
         {
-            service.Connection = connection;
+            service.EnabledUsers = enabledUsers;
         }
 
         public IOService GetService()

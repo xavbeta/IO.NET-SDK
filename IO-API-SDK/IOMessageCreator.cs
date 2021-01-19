@@ -27,18 +27,12 @@ namespace IO_API_SDK
 
         private void Reset()
         {
-            msg = new IOSimpleMessage() { Content = new IOSimpleContent() };
+            msg = new IOSimpleMessage() { Content = new IOMessageContent() };
         }
 
-        public void SetSubject(string subject)
-        {
-            msg.Content.Subject = subject;
-        }
+        public void SetSubject(string subject) => msg.Content.Subject = subject;
 
-        public void SetBody(string body)
-        {
-            msg.Content.Markdown = body;
-        }
+        public void SetBody(string body) => msg.Content.Markdown = body;
 
         public void SetDueDate(DateTime dueDate)
         {
