@@ -17,20 +17,36 @@
 mono_crash.*
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-[Ww][Ii][Nn]32/
-[Aa][Rr][Mm]/
-[Aa][Rr][Mm]64/
-bld/
-[Bb]in/
-[Oo]bj/
-[Ll]og/
-[Ll]ogs/
+IO-API-SDK/[Dd]ebug/
+IO-API-SDK/[Dd]ebugPublic/
+IO-API-SDK/[Rr]elease/
+IO-API-SDK/[Rr]eleases/
+IO-API-SDK/x64/
+IO-API-SDK/x86/
+IO-API-SDK/[Ww][Ii][Nn]32/
+IO-API-SDK/[Aa][Rr][Mm]/
+IO-API-SDK/[Aa][Rr][Mm]64/
+IO-API-SDK/bld/
+IO-API-SDK/[Bb]in/
+IO-API-SDK/[Oo]bj/
+IO-API-SDK/[Ll]og/
+IO-API-SDK/[Ll]ogs/
+
+IO-API-SDKTester/[Dd]ebug/
+IO-API-SDKTester/[Dd]ebugPublic/
+IO-API-SDKTester/[Rr]elease/
+IO-API-SDKTester/[Rr]eleases/
+IO-API-SDKTester/x64/
+IO-API-SDKTester/x86/
+IO-API-SDKTester/[Ww][Ii][Nn]32/
+IO-API-SDKTester/[Aa][Rr][Mm]/
+IO-API-SDKTester/[Aa][Rr][Mm]64/
+IO-API-SDKTester/bld/
+IO-API-SDKTester/[Bb]in/
+IO-API-SDKTester/[Oo]bj/
+IO-API-SDKTester/[Ll]og/
+IO-API-SDKTester/[Ll]ogs/
+
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
