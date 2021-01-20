@@ -45,11 +45,12 @@ namespace IO_API_SDK.Messages
         public async Task<bool> CheckUserEnabledAsync(IOUser user)
         {
             HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, "profiles");
+            var txt = JsonConvert.SerializeObject(new { fiscal_code = user.FiscalCode });
+            Debug.WriteLine(txt);
 
-            
             req.Content = new StringContent(
-                    JsonConvert.SerializeObject( new { fiscal_code = user.FiscalCode } ),
-                    Encoding.UTF8, 
+                    txt,
+                    Encoding.UTF8,
                     "application/json");
 
             try
@@ -68,20 +69,23 @@ namespace IO_API_SDK.Messages
             
         }
 
-        public async Task<bool> SendMessage(IOMessage msg, IOUser user)
+        public async Task<string> SendMessage(IOMessage msg, IOUser user)
         {
             if (!msg.Check())
+            {
                 throw new IOMessageFormatException("One or more fields have wrong format");
+            }
 
             var txt = JsonConvert.SerializeObject(msg);
             Debug.WriteLine(txt);
 
-            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, $"messages/{user.FiscalCode}");
-
-            req.Content = new StringContent(
+            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, $"messages/{user.FiscalCode}")
+            {
+                Content = new StringContent(
                     txt,
                     Encoding.UTF8,
-                    "application/json");
+                    "application/json")
+            };
 
             HttpResponseMessage response = await client.SendAsync(req);
             response.EnsureSuccessStatusCode();
@@ -89,26 +93,7 @@ namespace IO_API_SDK.Messages
             var resp = await response.Content.ReadAsStringAsync();
 
             dynamic result = JObject.Parse(resp);
-            return result.sender_allowed == true;
+            return result.id;
         }
-
-        /*
-        using var client = new HttpClient();
-
-        client.BaseAddress = new Uri("https://api.github.com");
-        client.DefaultRequestHeaders.Add("User-Agent", "C# console program");
-        client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-
-        var url = "repos/symfony/symfony/contributors";
-        HttpResponseMessage response = await client.GetAsync(url);
-        response.EnsureSuccessStatusCode();
-        var resp = await response.Content.ReadAsStringAsync();
-
-        List<Contributor> contributors = JsonConvert.DeserializeObject<List<Contributor>>(resp);
-        contributors.ForEach(Console.WriteLine);
-
-        record Contributor(string Login, short Contributions);
-        */
     }
 }

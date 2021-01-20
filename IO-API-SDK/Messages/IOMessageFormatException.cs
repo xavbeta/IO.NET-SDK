@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace IO_API_SDK.Messages
 {
     [Serializable]
-    internal class IOMessageFormatException : Exception
+    public class IOMessageFormatException : Exception
     {
         public IOMessageFormatException()
         {

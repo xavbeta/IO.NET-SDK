@@ -39,12 +39,14 @@ namespace IO_API_SDK
             msg.Content.DueDate = dueDate;
         }
 
+        //WARN: not tested
         //TODO: explode builder item with lazy instance creation
         public void SetPaymentData(PaymentData paymentData) 
         {
             msg.Content.PaymentData = paymentData;
         }
 
+        //WARN: not tested
         //TODO: explode builder item with lazy instance creation
         public void SetPrescriptionData(PrescriptionData prescriptionData)
         {

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using IO_API_SDK;
+using IO_API_SDK.Messages;
 
 namespace IO_API_SDKTester
 {
@@ -19,9 +21,8 @@ namespace IO_API_SDKTester
 
             // Create the Service instance
             IOServiceCreator srvCreator = IOServiceCreator.Instance;
-
             srvCreator.SetApiKey(API_KEY);
-            srvCreator.SetEnabledUsers(new List<IOUser> { new IOUser { FiscalCode = TEST_USER } });
+            srvCreator.SetEnabledUsers(new List<IOUser> { new IOUser { FiscalCode = TEST_USER }, new IOUser { FiscalCode = TEST_USER } });
             
             IOService service = srvCreator.GetService();
 
@@ -30,21 +31,55 @@ namespace IO_API_SDKTester
             IOMessageCreator msgCreator = IOMessageCreator.Instance;
             msgCreator.SetSubject("TEST SUBJECT");
             msgCreator.SetBody("## TEST BODY\nLet's hope it works!\n## TEST BODY\nLet's hope it works!\n## TEST BODY\nLet's hope it works!");
-            msgCreator.SetDueDate(DateTime.Today + new TimeSpan(1,0,0,0));
+            //msgCreator.SetBody("## TEST BODY\nLet's hope it works!"); //Too short! 
+            msgCreator.SetDueDate(DateTime.Today + new TimeSpan(1,0,0,0)); //tomorrow
             var msg = msgCreator.GetMessage();
             
+
+            // Send messages
             var enabledUsers = await service.UpdateUsers();
 
-
-            foreach(var user in enabledUsers)
+            // One by One
+            foreach (var user in enabledUsers)
             {
-                if (user.Value)
+                try
                 {
-                    var result = await service.SendMessage(msg, user.Key);
-                    Debug.Assert(result, "Message sending failure!");
+                    if (user.Value)
+                    {
+                        var result = await service.SendMessage(msg, user.Key);
+                        Debug.Assert(!string.IsNullOrEmpty(result), "Message sending failure!");
+                    }
+                }catch(HttpRequestException ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.Data);
+                    Debug.WriteLine(ex.InnerException);
                 }
-                    
+                catch(IOMessageFormatException ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.Data);
+                }    
             }
+
+            /*
+            // Or as a single batch 
+            try
+            {
+                var results =  service.SendMessage(msg, enabledUsers.Where(a => a.Value).Select(a => a.Key));
+            }
+            catch (HttpRequestException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.Data);
+                Debug.WriteLine(ex.InnerException);
+            }
+            catch (IOMessageFormatException ex)
+            {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.Data);
+            }
+            */
 
             Console.WriteLine("All done!");
 
