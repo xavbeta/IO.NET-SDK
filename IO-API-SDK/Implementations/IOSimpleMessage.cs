@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using IO_API_SDK.Messages;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,11 @@ namespace IO_API_SDK
     {
         public IOMessageContent Content { get; set; }
         public int TimeToLive { get; set; } = 3600;
+
+        public bool Check()
+        {
+            return new IOSimpleMessageChecker().CheckMessage(this);
+        }
     }
 
     [JsonObject(NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
@@ -22,10 +29,14 @@ namespace IO_API_SDK
 
         public string Markdown { get; set; }
 
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(CustomIsoDateTimeFormatConverter), "yyyy'-'MM'-'dd'T'HH':'mm':'ss")]
         public DateTime? DueDate { get; set; }
 
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public PrescriptionData PrescriptionData { get; set; }
 
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public PaymentData PaymentData { get; set; }
     }
 

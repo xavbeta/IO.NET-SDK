@@ -33,8 +33,6 @@ namespace IO_API_SDK.Messages
         }
        
 
-        
-
         public void Setup(string key)
         {
            client = new HttpClient();
@@ -72,18 +70,18 @@ namespace IO_API_SDK.Messages
 
         public async Task<bool> SendMessage(IOMessage msg, IOUser user)
         {
+            if (!msg.Check())
+                throw new IOMessageFormatException("One or more fields have wrong format");
 
             var txt = JsonConvert.SerializeObject(msg);
             Debug.WriteLine(txt);
 
-            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, "messages");
-
+            HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, $"messages/{user.FiscalCode}");
 
             req.Content = new StringContent(
-                    JsonConvert.SerializeObject(new { fiscal_code = user.FiscalCode }),
+                    txt,
                     Encoding.UTF8,
                     "application/json");
-
 
             HttpResponseMessage response = await client.SendAsync(req);
             response.EnsureSuccessStatusCode();

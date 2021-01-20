@@ -14,5 +14,7 @@ namespace IO_API_SDK
         
         IOMessageContent Content { get; set; }
         int TimeToLive { get; set; }
+
+        bool Check();
     }
 }
